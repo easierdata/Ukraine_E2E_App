@@ -10,6 +10,10 @@ https://search.earthdata.nasa.gov/search/granules?p=C2021957295-LPCLOUD&pg[0][v]
 - Use download_hls.sh to download all the granules. This will download all the files into the directory you run the script from. This script is a copy/paste from the EarthData website.
 - Next, use organize_granules.py to place all of the downloaded granules into a directory structure that is easier to work with. Each directory is unique based on the granule and the date.
 
+After running organize_granules.py, your directory should look like this:
+
+![image](https://github.com/easierdata/Ukraine_E2E_App/assets/9572232/be20d152-b9ed-4f21-8251-b71b6f4ce900)
+
 ## Mosaic granules
 WIP
 
