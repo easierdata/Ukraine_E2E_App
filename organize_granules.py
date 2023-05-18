@@ -2,6 +2,9 @@ import os
 import shutil
 import re
 
+# Create the parent directory 'granules' if it doesn't exist
+os.makedirs('granules', exist_ok=True)
+
 # Get a list of all files in the current directory
 files = os.listdir()
 
@@ -23,7 +26,7 @@ for filename in files:
         granule, date = match.groups()
 
         # Create the new directory name
-        new_dir = f'{granule}_{date}'
+        new_dir = f'granules/{granule}_{date}'
 
         # Create the new directory if it doesn't exist
         os.makedirs(new_dir, exist_ok=True)
