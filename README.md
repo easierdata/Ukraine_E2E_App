@@ -6,13 +6,11 @@ There are 7 granules at 0% cloud cover
 I chose the 10 granules at <= 5% cloud cover to download. Here is my [search query url](https://search.earthdata.nasa.gov/search/granules?p=C2021957295-LPCLOUD&pg[0][v]=f&pg[0][cc][max]=5&pg[0][gsk]=start_date&q=hls&sb[0]=27.59326%2C48.93109%2C29.06104%2C49.37046&qt=2022-03-01T00%3A00%3A00.000Z%2C2022-04-15T23%3A59%3A59.999Z&tl=1681489962!3!!&lat=49.02099609375&long=26.26171875&zoom=7)
 
 
-## Setting up the environment
-- Install Python 3.10.X
+## Setting up the environment (MacOS)
 ```shell
-$ python3 -m venv env
-$ source env/bin/activate
-$ pip install --upgrade pip
-$ pip install -r requirements.txt
+$ conda create -n ukraineE2E
+$ conda activate UkraineE2E
+$ conda install -c conda-forge gdal
 ```
 
 ## Downloading the data

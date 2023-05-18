@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Activate the Conda environment
+conda activate UkraineE2E
+
 # Change to 'granules' directory
 cd granules
 
