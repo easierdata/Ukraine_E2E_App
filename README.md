@@ -27,6 +27,15 @@ $ sh mosaic_granule_bands.sh
 ```
 This will mosaic all the bands for each granule into a single file. The output will be in the same directory as the granule. The output file will be named '<granule_name>_mosaic.tif'
 
+Let's check to make sure the mosaics look good. We can use gdalinfo to check the metadata of the mosaic.
+```shell
+$ gdalinfo granules/<granule_name>/<granuel_name>_mosaic.tif
+> Band 1
+> Band 2
+> Band 3
+> Band N
+```
+
 ## Extract Feature Vectors
 WIP
 
