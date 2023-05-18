@@ -1,23 +1,17 @@
 #!/bin/bash
 
 # Activate the Conda environment
-conda activate UkraineE2E
-
-# Change to 'granules' directory
-cd granules
+conda activate myenv
 
 # Loop over all directories inside 'granules'
-for d in */ ; do
-    # Navigate into the directory
-    cd "$d"
-
+for d in granules/*/ ; do
+    # Remove 'granules/' from directory name
+    granule_name=${d#granules/}
     # Remove trailing slash from directory name
-    granule_name=${d%/}
+    granule_name=${granule_name%/}
 
-    # Call gdal_merge.py on all .tif files in the directory
+    # Call gdal_merge.py with -separate on all band .tif files in the directory
     # Output to a file named after the directory (granule name)
-    gdal_merge.py -o "${granule_name}_mosaic.tif" *.tif
+    gdal_merge.py -separate -o "${d}${granule_name}_mosaic.tif" ${d}*B*.tif
 
-    # Navigate back to the 'granules' directory
-    cd ..
 done
