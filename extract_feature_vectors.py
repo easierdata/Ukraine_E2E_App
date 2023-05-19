@@ -31,14 +31,17 @@ for subdir in subdirs:
         )
 
         # Optional: add coordinates to each pixel
-        df["x"] = [
-            coords[0]
-            for coords in src.transform * np.indices(src.shape[::-1]).reshape(2, -1).T
-        ]
-        df["y"] = [
-            coords[1]
-            for coords in src.transform * np.indices(src.shape[::-1]).reshape(2, -1).T
-        ]
+        rows, cols = np.indices(src.shape)
+        x, y = src.transform * (rows.flatten(), cols.flatten())
+        df['x'] = x
+        df['y'] = y
+
+    # Show Histogram of each band
+    # bands_df = df[[col for col in df.columns if 'band' in col]]
+
+    # Plot a histogram for each band in the DataFrame
+    # bands_df.hist(figsize=(15,10), bins=50)
+    # plt.show()
 
     # Save the DataFrame to a .feather file
     df.to_feather(f"{base_dir}{subdir}/{subdir}_feature_vectors.feather")

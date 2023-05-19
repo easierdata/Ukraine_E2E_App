@@ -1,3 +1,4 @@
 *.tif
+*.feather
 .DS_STORE
 venv
