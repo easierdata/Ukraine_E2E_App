@@ -37,7 +37,20 @@ $ gdalinfo granules/<granule_name>/<granuel_name>_mosaic.tif
 ```
 
 ## Extract Feature Vectors
-WIP
+We will now run a Python script to extract feature vectors from the mosaics. The script will extract feature vectors for each band in the mosaic. The output will be a .feather file with one column for each band. The schema will look like this where each cell value is the reflectance value for that band at that pixel.
+|  index  | band_1 | band_2 | band_3 | band_4 | band_5 | band_6 | band_7 | band_8 | band_9 | band_10 | band_11 | band_12 | band_13 |        x |       y |
+|----------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|--------:|--------:|--------:|--------:|---------:|--------:|
+| 13395595 |    426 |    486 |    624 |    831 |    922 |   1000 |   1122 |   1191 |    650 |      22 |    2683 |    2536 |    1322 | 709770.0 |5390370.0|
+| 13395596 |    426 |    475 |    622 |    830 |    924 |   1004 |   1118 |   1180 |    651 |      23 |    2678 |    2526 |    1291 | 709770.0 |5390340.0|
+| 13395597 |    426 |    484 |    631 |    837 |    917 |   1007 |   1112 |   1187 |    651 |      23 |    2670 |    2526 |    1303 | 709770.0 |5390310.0|
+| 13395598 |    425 |    474 |    618 |    830 |    916 |    985 |   1103 |   1180 |    648 |      20 |    2695 |    2535 |    1298 | 709770.0 |5390280.0|
+| 13395599 |    425 |    493 |    634 |    846 |    933 |   1020 |   1126 |   1204 |    648 |      20 |    2708 |    2543 |    1316 | 709770.0 |5390250.0|
+
+
+```shell
+$ conda activate UkraineE2E
+$ python3 extract_feature_vectors.py
+```
 
 ## Segmentation
 WIP
