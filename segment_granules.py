@@ -2,7 +2,7 @@
 """
 Created on Fri Sep 22 14:05:21 2017
 
-@author: sskakun
+@author: sskakun, jsolly
 """
 
 from __future__ import print_function
@@ -10,16 +10,11 @@ from __future__ import print_function
 import matplotlib.pyplot as plt
 import numpy as np
 
-from skimage.data import astronaut
-from skimage.color import rgb2gray
-from skimage.filters import sobel
-from skimage.segmentation import felzenszwalb, slic, quickshift  # , watershed
+from skimage.segmentation import slic, quickshift  # , watershed
 from skimage.segmentation import mark_boundaries
-from skimage.util import img_as_float
 from osgeo import gdal, osr, ogr, gdalconst
 import time
 import os
-import argparse
 
 output_driver = "GTiff"
 output_options = (
@@ -53,51 +48,6 @@ def create_output_dataset(
     )
     copy_metadata(in_dataset, out_dataset)
     return out_dataset
-
-
-def Test():
-    n_segments = 550
-    compactness = 10
-    sigma = 1
-    slic_zero = True
-    # direct test from pytohn tutorial
-    img = img_as_float(astronaut()[::2, ::2])
-    print(np.shape(img))
-    print(np.min(img), np.max(img))
-    segments_slic = slic(
-        img,
-        n_segments=n_segments,
-        compactness=compactness,
-        sigma=sigma,
-        slic_zero=slic_zero,
-    )
-    print("SLIC number of segments: {}".format(len(np.unique(segments_slic))))
-
-    fig, ax = plt.subplots(
-        2,
-        2,
-        figsize=(10, 10),
-        sharex=True,
-        sharey=True,
-        subplot_kw={"adjustable": "box-forced"},
-    )
-
-    ax[0, 0].imshow(mark_boundaries(img, segments_slic))
-    ax[0, 0].set_title("SLIC")
-    #    ax[0, 1].imshow(img_as_float(astronaut()))
-    ax[0, 1].imshow(img)
-    ax[1, 0].imshow(segments_slic)
-    if not slic_zero:
-        plt.savefig(
-            "astronaut_nseg%s_compact%s_sigma%s.png" % (n_segments, compactness, sigma)
-        )
-    else:
-        plt.savefig(
-            "astronaut_SLICO_nseg%s_compact%s_sigma%s.png"
-            % (n_segments, compactness, sigma)
-        )
-    plt.show()
-    return
 
 
 def Sentinel2SLIC(path_to_mosaic, path_out):
@@ -391,8 +341,27 @@ def Sentinel2QuickShift(path_to_mosaic, path_out="outputs"):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Segmentation of Sentinel-2 images")
-    parser.add_argument("-f", "--fname", type=str, help="path to the image mosaic")
-    args = parser.parse_args()
-    Sentinel2QuickShift(args.fname)
+    # --------------------------------------------------------------------------
+    # ARGPARSE SECTION
+    # This section is for command line arguments
+    # Uncomment if you want to enable command line arguments
+    # --------------------------------------------------------------------------
+    # import argparse
+    # parser = argparse.ArgumentParser(description="Segmentation of Sentinel-2 images")
+    # parser.add_argument("-f", "--fname", type=str, help="path to the image mosaic")
+    # args = parser.parse_args()
+    # Sentinel2QuickShift(args.fname)
     # Sentinel2SLIC(args.fname)
+
+    # --------------------------------------------------------------------------
+    # AUTOMATED PROCESSING SECTION
+    # This section walks through the /granules directory,
+    # and runs the Sentinel2QuickShift function on each _mosaic.tif file found
+    # --------------------------------------------------------------------------
+    rootDir = "./granules"
+    for dirName, subdirList, fileList in os.walk(rootDir):
+        for fname in fileList:
+            if fname.endswith("_mosaic.tif"):
+                mosaic_path = os.path.join(dirName, fname)
+                Sentinel2QuickShift(mosaic_path)
+                print(f"Sentinel2QuickShift completed for {mosaic_path}")
