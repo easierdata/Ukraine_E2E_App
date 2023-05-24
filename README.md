@@ -53,7 +53,12 @@ $ python3 extract_feature_vectors.py
 ```
 
 ## Segmentation
-WIP
+Run segment_granules.py
+```shell
+$ conda activate UkraineE2E
+$ python3 segment_granules.py
+```
+This will run segmentation using the Sentinel2QuickShift algorithm.
 
 ## Classification
 WIP
