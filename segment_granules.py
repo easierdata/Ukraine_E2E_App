@@ -50,7 +50,7 @@ def create_output_dataset(
     return out_dataset
 
 
-def Sentinel2SLIC(path_to_mosaic, path_out):
+def Sentinel2SLIC(path_to_mosaic, path_out="output"):
     fname = os.path.basename(path_to_mosaic)
     # path_to_data = 'D:/Data/Classif-testbed/sat2018_mt/coreg/'
     # path_out = 'D:/Scripts/Segmentation/S2/test/'
@@ -363,5 +363,5 @@ if __name__ == "__main__":
         for fname in fileList:
             if fname.endswith("_mosaic.tif"):
                 mosaic_path = os.path.join(dirName, fname)
-                Sentinel2QuickShift(mosaic_path)
+                Sentinel2SLIC(mosaic_path)
                 print(f"Sentinel2QuickShift completed for {mosaic_path}")
