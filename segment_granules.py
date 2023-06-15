@@ -361,7 +361,7 @@ if __name__ == "__main__":
     rootDir = "./granules"
     for dirName, subdirList, fileList in os.walk(rootDir):
         for fname in fileList:
-            if fname.endswith("_mosaic.tif"):
+            if fname.endswith("true_color_mosaic.tif"):
                 mosaic_path = os.path.join(dirName, fname)
                 Sentinel2SLIC(mosaic_path)
                 print(f"Sentinel2QuickShift completed for {mosaic_path}")
