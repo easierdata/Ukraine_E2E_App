@@ -2,3 +2,5 @@
 *.feather
 .DS_STORE
 venv
+*.gpkg*
+*.xml

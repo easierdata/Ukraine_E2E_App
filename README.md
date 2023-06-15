@@ -10,7 +10,7 @@ I chose the 10 granules at <= 5% cloud cover to download. Here is my [search que
 ```shell
 $ conda create -n ukraineE2E
 $ conda activate UkraineE2E
-$ conda install -c conda-forge gdal rasterio pandas numpy pyarrow matplotlib scikit-image 
+$ conda install -c conda-forge gdal rasterio pandas numpy pyarrow matplotlib scikit-image leafmap segment-geospatial localtileserver
 
 
 ## Downloading the data
