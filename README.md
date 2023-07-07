@@ -54,7 +54,7 @@ This will run segmentation using the Segment Anything Model (SAM)
 ```shell
 ```shell    
 $ docker build -t ukraine_e2e_app .
-$ docker run -it --rm -v $(pwd):/app ukraine_e2e_app
+$ docker run --rm -v $(pwd)/granules/T35UNQ_20222080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ukraine_e2e_app
 ```
 
 ## Segmentation (Bacalhau)
