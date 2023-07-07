@@ -11,5 +11,5 @@ RUN mkdir -p /project/inputs
 WORKDIR /project
 COPY step4_segment_granules.py /project/step4_segment_granules.py
 
-CMD ["python3", "step4_segment_granules.py", "--mosaic_file_path", "inputs/T35UNQ_2022080/T35UNQ_2022080_true_color_mosaic_uint8.tif"]
+CMD ["python3", "step4_segment_granules.py", "-f", "inputs/T35UNQ_2022080_true_color_mosaic_uint8.tif"]
 
