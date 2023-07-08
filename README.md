@@ -54,7 +54,7 @@ This will run segmentation using the Segment Anything Model (SAM)
 ```shell
 ```shell    
 $ docker build -t ukraine_e2e_app .
-$ docker run --rm -v $(pwd)/granules/T35UNQ_20222080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ukraine_e2e_app
+$ docker run --rm -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ukraine_e2e_app
 ```
 
 ## Segmentation (Bacalhau)
@@ -70,8 +70,8 @@ $ docker buildx build --platform linux/amd64 -t ukraine_e2e_app_amd64 .
 $ docker tag ukraine_e2e_app_amd64 ${USERNAME}/ukraine_e2e_app_amd64:latest
 $ docker push ${USERNAME}/ukraine_e2e_app_amd64:latest
 # ensure the mosaic is on IPFS
-$ ipfs findprovs QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG # Check to make sure the mosaic is on IPFS. This should return a list of peers
-bacalhau docker run -v QmTYadG6K4LocouLu6wFzeMXNB5z8ikdpwuGqpdZNxp5qR:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:latest
+$ ipfs dht findprovs QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG # Check to make sure the mosaic is on IPFS. This should return a list of peers
+bacalhau docker run --input ipfs://QmTYadG6K4LocouLu6wFzeMXNB5z8ikdpwuGqpdZNxp5qR:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:latest
 ```
 
 ## Classification
