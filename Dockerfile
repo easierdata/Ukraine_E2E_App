@@ -1,17 +1,13 @@
-FROM continuumio/miniconda3
+FROM giswqs/segment-geospatial
 
-RUN apt-get update && apt-get install -y libgl1-mesa-glx
-RUN conda update -y conda
-RUN conda install -c conda-forge segment-geospatial -y
-
-LABEL maintainer="jsolly"
-
-RUN mkdir -p /project/outputs
-RUN mkdir -p /project/inputs
-WORKDIR /project
+USER root
+WORKDIR /
 
 COPY step4_segment_granules.py .
 
-CMD ["python3", "step4_segment_granules.py"]
+# Change permission of the script to make it readable and executable
+RUN chmod 755 /step4_segment_granules.py
 
-# docker run -it -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ukraine_e2e_app
+# Download model weights during build time so they are cached for later use
+RUN ["python3", "fetch_model_weights.py"] 
+CMD ["python3", "step4_segment_granules.py"]

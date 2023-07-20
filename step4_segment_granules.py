@@ -1,11 +1,6 @@
 from samgeo import SamGeo
-import rasterio
 
-
-mosaic_file_path = "inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif"
-
-
-f = rasterio.open(mosaic_file_path)
+mosaic_file_path = "T35UPQ_2022080_true_color_mosaic_uint8.tif"
 
 sam = SamGeo(
     model_type="vit_h",
