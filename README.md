@@ -71,7 +71,7 @@ $ docker tag ukraine_e2e_app_amd64 ${USERNAME}/ukraine_e2e_app_amd64:latest
 $ docker push ${USERNAME}/ukraine_e2e_app_amd64:latest
 # ensure the mosaic is on IPFS
 $ ipfs dht findprovs QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG # Check to make sure the mosaic is on IPFS. This should return a list of peers
-$ bacalhau docker run --input ipfs://QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:latest
+$ bacalhau docker run --timeout 10800 --gpu 1 --input ipfs://QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG:/T35UPQ_2022080_true_color_mosaic_uint8.tif jsolly/ukraine_e2e_app_amd64:july28
 ```
 
 ## Classification
