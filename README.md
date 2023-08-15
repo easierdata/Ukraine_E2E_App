@@ -14,16 +14,16 @@ $ conda install -c conda-forge gdal rasterio pandas numpy pyarrow matplotlib sci
 
 
 ## Downloading the data
-- Use download_hls.sh to download all the granules. This will download all the files into the directory you run the script from. This script is a copy/paste from the EarthData website.
-- Next, use organize_granules.py to place all of the downloaded granules into a directory structure that is easier to work with. Each directory is unique based on the granule and the date.
+- Use step1_download_hls.sh to download all the granules. This will download all the files into the directory you run the script from. This script is a copy/paste from the EarthData website.
+- Next, use step2_organize_granules.py to place all of the downloaded granules into a directory structure that is easier to work with. Each directory is unique based on the granule and the date.
 
-After running organize_granules.py, your directory should look like this*
+After running step2_organize_granules.py, your directory should look like this*
 
 ![image](https://github.com/easierdata/Ukraine_E2E_App/assets/9572232/be20d152-b9ed-4f21-8251-b71b6f4ce900)
 * The current version puts all the granules into a 'granules' directory
 ## Mosaic granules
 ```shell
-$ sh mosaic_granule_bands.sh
+$ sh step3_mosaic_granule_bands.sh
 ```
 This will mosaic all the bands for each granule into a single file. The output will be in the same directory as the granule. The output file will be named '<granule_name>_mosaic.tif'
 
@@ -52,9 +52,8 @@ This will run segmentation using the Segment Anything Model (SAM)
 
 ## Segmentation (Local Docker)
 ```shell
-```shell    
-$ docker build -t ukraine_e2e_app .
-$ docker run --rm -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ukraine_e2e_app
+$ docker build -t ${USERNAME}/ukraine_e2e_app_amd64:july28 .
+$ docker run --rm -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/project/inputs/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:july28 
 ```
 
 ## Segmentation (Bacalhau)
@@ -66,9 +65,8 @@ T35UPQ_2022080_true_color_mosaic_uint8.tif -> QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqX
 $ curl -sL https://get.bacalhau.org/install.sh | bash
 $ docker login
 $ docker buildx build --platform linux/amd64 -t ukraine_e2e_app_amd64 . 
-# or docker build -t ukraine_e2e_app . if not on an M1/M2 Mac
-$ docker tag ukraine_e2e_app_amd64 ${USERNAME}/ukraine_e2e_app_amd64:latest
-$ docker push ${USERNAME}/ukraine_e2e_app_amd64:latest
+# or docker build -t ${USERNAME}/ukraine_e2e_app_amd64:july28 . if not on an M1/M2 Mac
+$ docker push ${USERNAME}/ukraine_e2e_app_amd64:july28 
 # ensure the mosaic is on IPFS
 $ ipfs dht findprovs QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG # Check to make sure the mosaic is on IPFS. This should return a list of peers
 $ bacalhau docker run --timeout 10800 --gpu 1 --input ipfs://QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG:/T35UPQ_2022080_true_color_mosaic_uint8.tif jsolly/ukraine_e2e_app_amd64:july28
