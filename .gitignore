@@ -1,4 +1,5 @@
-*.tif
+granules/**/*.tif
+archive_data/**/*.tif
 *.feather
 .DS_STORE
 venv
