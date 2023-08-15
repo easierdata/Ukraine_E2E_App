@@ -42,7 +42,7 @@ Let's check to make sure the mosaics look good. We can use gdalinfo to check the
  conda activate UkraineE2E
  which python
 > /Users/jsolly.admin/anaconda3/envs/UkraineE2E/bin/python
- python3 extract_feature_vectors.py
+ python extract_feature_vectors.py
 ```
 
 ## Segmentation (Local)
