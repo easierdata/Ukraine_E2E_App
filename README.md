@@ -8,9 +8,9 @@ I chose the 10 granules at <= 5% cloud cover to download. Here is my [search que
 ## Setting up the environment (MacOS)
 
 ````shell
-$ conda create -n ukraineE2E
-$ conda activate UkraineE2E
-$ conda install -c conda-forge gdal rasterio pandas numpy pyarrow matplotlib scikit-image leafmap segment-geospatial localtileserver
+ conda create -n ukraineE2E
+ conda activate UkraineE2E
+ conda install -c conda-forge gdal rasterio pandas numpy pyarrow matplotlib scikit-image leafmap segment-geospatial localtileserver
 
 
 ## Downloading the data
@@ -23,7 +23,7 @@ After running step2_organize_granules.py, your directory should look like this*
 * The current version puts all the granules into a 'granules' directory
 ## Mosaic granules
 ```shell
-$ sh step3_mosaic_granule_bands.sh
+ sh step3_mosaic_granule_bands.sh
 ````
 
 This will mosaic all the bands for each granule into a single file. The output will be in the same directory as the granule. The output file will be named '<granule_name>\_mosaic.tif'
@@ -31,7 +31,7 @@ This will mosaic all the bands for each granule into a single file. The output w
 Let's check to make sure the mosaics look good. We can use gdalinfo to check the metadata of the mosaic.
 
 ```shell
-$ gdalinfo granules/<granule_name>/<granuel_name>_mosaic.tif
+ gdalinfo granules/<granule_name>/<granuel_name>_mosaic.tif
 > Band 1
 > Band 2
 > Band 3
@@ -39,8 +39,10 @@ $ gdalinfo granules/<granule_name>/<granuel_name>_mosaic.tif
 ```
 
 ```shell
-$ conda activate UkraineE2E
-$ python3 extract_feature_vectors.py
+ conda activate UkraineE2E
+ which python
+> /Users/jsolly.admin/anaconda3/envs/UkraineE2E/bin/python
+ python3 extract_feature_vectors.py
 ```
 
 ## Segmentation (Local)
@@ -48,8 +50,8 @@ $ python3 extract_feature_vectors.py
 Run segment_granules.py
 
 ```shell
-$ conda activate UkraineE2E
-$ python3 segment_granules.py
+ conda activate UkraineE2E
+ python3 step4_segment_granules.py
 ```
 
 This will run segmentation using the Segment Anything Model (SAM)
@@ -57,8 +59,8 @@ This will run segmentation using the Segment Anything Model (SAM)
 ## Segmentation (Local Docker)
 
 ```shell
-$ docker build -t ${USERNAME}/ukraine_e2e_app_amd64:july28 .
-$ docker run --rm -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:july28
+ docker build -t ${USERNAME}/ukraine_e2e_app_amd64:july28 .
+ docker run --rm -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:july28
 ```
 
 ## Segmentation (Bacalhau)
@@ -68,15 +70,15 @@ T35UPQ_2022080_true_color_mosaic_uint8.tif -> QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqX
 
 ```shell
 #install bacalhau cli
-$ curl -sL https://get.bacalhau.org/install.sh | bash
-$ docker login
-$ docker buildx build --platform linux/amd64 -t {USERNAME}/ukraine_e2e_app_amd64 .
+ curl -sL https://get.bacalhau.org/install.sh | bash
+ docker login
+ docker buildx build --platform linux/amd64 -t {USERNAME}/ukraine_e2e_app_amd64 .
 # Or this command for Arm architecture
-# $ docker buildx build --platform linux/arm64 -t jsolly/ukraine_e2e_app:arm .
-$ docker push ${USERNAME}/ukraine_e2e_app_amd64:july28
+#  docker buildx build --platform linux/arm64 -t jsolly/ukraine_e2e_app:arm .
+ docker push ${USERNAME}/ukraine_e2e_app_amd64:july28
 # ensure the mosaic is on IPFS
-$ ipfs dht findprovs QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG # Check to make sure the mosaic is on IPFS. This should return a list of peers
-$ bacalhau docker run --timeout 10800 --gpu 1 --input ipfs://QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG:/T35UPQ_2022080_true_color_mosaic_uint8.tif jsolly/ukraine_e2e_app_amd64:july28
+ ipfs dht findprovs QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG # Check to make sure the mosaic is on IPFS. This should return a list of peers
+ bacalhau docker run --timeout 10800 --gpu 1 --input ipfs://QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqXipoc23FNqwFG:/T35UPQ_2022080_true_color_mosaic_uint8.tif jsolly/ukraine_e2e_app_amd64:july28
 ```
 
 ## Classification
