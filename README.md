@@ -37,10 +37,10 @@ Let's check to make sure the mosaics look good. We can use gdalinfo to check the
 ## Segmentation (Local Docker)
 
 ```shell
- docker build -t ${USERNAME}/ukraine_e2e_app_amd64:july28 .
+docker build -t ${USERNAME}/ukraine_e2e_app_amd64:july28 .
 # Or this command for Arm architecture (No support on Bacalhau as of Aug 2023)
 # docker buildx build --platform linux/arm64 -t jsolly/ukraine_e2e_app:arm .
- docker run --rm -v $(pwd)/granules/T35UPQ_2022080/T35UPQ_2022080_true_color_mosaic_uint8.tif:/T35UPQ_2022080_true_color_mosaic_uint8.tif ${USERNAME}/ukraine_e2e_app_amd64:july28
+docker run --rm ${USERNAME}/ukraine_e2e_app:arm # There is already a sample image in the container
 ```
 
 ## Segmentation (Bacalhau)

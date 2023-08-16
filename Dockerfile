@@ -5,6 +5,7 @@ WORKDIR /
 
 COPY fetch_model_weights.py .
 COPY step4_segment_granules.py .
+COPY ukraine_sample.tif .
 
 # Change permission of the script to make it readable and executable
 RUN chmod 755 /step4_segment_granules.py
