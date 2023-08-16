@@ -43,6 +43,13 @@ docker buildx build --platform linux/amd64 -t ${USERNAME}/ukraine_e2e_app_amd64:
 docker run --rm ${USERNAME}/ukraine_e2e_app_amd64:july28 . # There is already a sample image in the container
 ```
 
+## Upload Image to Docker Hub
+
+```shell
+docker login
+docker push ${USERNAME}/ukraine_e2e_app_amd64:july28
+```
+
 ## Segmentation (Bacalhau)
 
 Here is the input mosaic
@@ -53,6 +60,7 @@ T35UPQ_2022080_true_color_mosaic_uint8.tif -> QmSvTaRZmJJNnrj4jPfpTY5PHpTkMztHqX
  curl -sL https://get.bacalhau.org/install.sh | bash
  docker login
  docker buildx build --platform linux/amd64 -t {USERNAME}/ukraine_e2e_app_amd64 .
+
 
  docker push ${USERNAME}/ukraine_e2e_app_amd64:july28
 # ensure the mosaic is on IPFS
