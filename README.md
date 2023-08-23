@@ -40,7 +40,7 @@ Let's check to make sure the mosaics look good. We can use gdalinfo to check the
 docker buildx build --platform linux/amd64 -t ${USERNAME}/ukraine_e2e_app_amd64:july28 .
 # Or this command for Arm architecture (No support on Bacalhau as of Aug 2023)
 # docker buildx build --platform linux/arm64 -t jsolly/ukraine_e2e_app:arm .
-docker run --rm ${USERNAME}/ukraine_e2e_app_amd64:july28 . # There is already a sample image in the container
+docker run --rm ${USERNAME}/ukraine_e2e_app_amd64:july28 # There is already a sample image in the container
 ```
 
 ## Upload Image to Docker Hub
