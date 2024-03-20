@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ukraine-e2e-app"
+version = "0.1.0"
+description = ""
+authors = ["Zheng Liu <zliu1208@umd.edu>"]
+readme = "README.md"
+packages = [{include = "ukraine_e2e_app"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+segment-geospatial = "^0.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
